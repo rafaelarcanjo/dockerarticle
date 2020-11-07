@@ -1,16 +1,15 @@
 version: "3" 
 services:
   # Web service layer
-  nginx:
-    image: nginx:1.19.4
-    volumes:
-      - "app:/var/www/html"
-      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-    ports:
-      - "80:80"
-    depends_on:
-      - php
-    restart: always
+  # nginx:
+  #   image: nginx:1.19.4
+  #   volumes:
+  #     - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - php
+  #   restart: always
 
   # Application service layer
   php:
@@ -18,14 +17,15 @@ services:
       context: ./php
     volumes:
       - "app:/var/www/html"
+      - "./php/000-default.conf:/etc/apache2/sites-enabled/000-default.conf"
     ports:
-      - "9000:9000"
+      - "8000:80"
     depends_on:
       - mysql
     environment:
       - MYSQL_USER=root
-      - MYSQL_PASS=123.456
-      restart: always
+      - MYSQL_PASS=9ZxPyx4i8ooBrlN6
+    restart: always
   
   # Data persistence service layer
   mysql:
@@ -36,7 +36,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=123.456
+      - MYSQL_ROOT_PASSWORD=9ZxPyx4i8ooBrlN6
     restart: always
 
 volumes:
